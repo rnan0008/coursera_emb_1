@@ -1,0 +1,145 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+//#include "stats.h"
+
+/* Size of the Data Set */
+#define SIZE (40)
+
+void print_array(char * array, int length);
+int find_mean(char * array, int length);
+int find_maximum(char * array, int length);
+int find_minimum(char * array, int length);
+void swap(char *x_ptr, char *y_ptr);
+void sort_array(char array[], int n);
+int find_median(char array[], int length);
+void print_statistics(char array[], int length);
+
+void main() {
+
+  unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
+                              114, 88,   45,  76, 123,  87,  25,  23,
+                              200, 122, 150, 90,   92,  87, 177, 244,
+                              201,   6,  12,  60,   8,   2,   5,  67,
+                                7,  87, 250, 230,  99,   3, 100,  90};
+
+  /* Other Variable Declarations Go Here */
+  /* Statistics and Printing Functions Go Here */
+
+//print_array(test, SIZE);
+print_statistics(test, SIZE);
+print_array(test, SIZE);
+
+}
+
+void print_array(char * array, int length){
+    printf("\nThe content of the array is as follows:\n");
+    int int_num;
+    for(int i = 0; i < length; i++){
+        int_num = (int)array[i];
+        if(int_num < 0){
+            int_num = int_num + 256;
+        }
+        printf("index: %d, data value: %d \n",i, int_num);
+    }
+}
+int find_mean(char * array, int length){
+    int int_num;
+    char res;int sum = 0;
+    
+    for(int i = 0; i < length; i++){
+        int_num = (int)array[i];
+        if(int_num < 0){
+            int_num = int_num + 256;
+        }
+        sum = sum + int_num;
+    }
+    return (int)(sum/length);
+}
+
+int find_maximum(char * array, int length){
+    int int_num;
+    int max = 0;
+    char res;
+    
+    for(int i = 0; i < length; i++){
+        int_num = (int)array[i];
+        if(int_num < 0){
+            int_num = int_num + 256;
+        }
+        
+        if(int_num > max){
+            max = int_num;
+        }
+    }
+    return max;
+}
+
+int find_minimum(char * array, int length){
+    int int_num;
+    int min = 255;
+    
+    for(int i = 0; i < length; i++){
+        int_num = (int)array[i];
+        if(int_num < 0){
+            int_num = int_num + 256;
+        }
+       
+        if(int_num < min){
+            min = int_num;
+        }
+    }
+    return min;
+}
+void swap(char *x_ptr, char *y_ptr) 
+{ 
+    unsigned char temporary = *x_ptr; 
+    *x_ptr = *y_ptr; 
+    *y_ptr = temporary; 
+}
+
+void sort_array(char array[], int length) 
+{ 
+   int i, j, int_j, int_jp1; 
+   for (i = 0; i < length-1; i++){      
+  
+       // Last i elements are already in place    
+       for (j = 0; j < length-1-i; j++){
+           int_j = (int)array[j];
+           int_jp1 = (int)array[j+1];
+           if(int_j < 0){
+                int_j = int_j + 256;
+            }
+            if(int_jp1 < 0){
+                int_jp1 = int_jp1 + 256;
+            }
+            if (int_j < int_jp1) 
+                {swap(&array[j], &array[j+1]);}
+       }      
+   }
+}
+
+int find_median(char array[], int length){
+    sort_array(array,length);
+    int int_m = (int)array[length/2-1];
+    int int_mp1 = (int)array[length/2];
+    return (int)((int_m+int_mp1)/2);
+}
+
+void print_statistics(char array[], int length){
+    int minimum = find_minimum(array, length);
+    int maximum = find_maximum(array, length);
+    int mean = find_mean(array, length);
+    int median = find_median(array, length);
+    
+    printf("Minimum of the dataset is %d .\n",minimum);
+    printf("Maximum of the dataset is %d .\n",maximum);
+    printf("Mean of the dataset is %d .\n",mean);
+    printf("Median of the dataset is %d .\n",median);
+    
+}
+
+
+
+
+
